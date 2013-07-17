@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+        <script src="http://code.jquery.com/jquery.js"></script>
+</head>
+<body>
+<table>
+        <tr>
+            <td> Question </td>
+            <td> pub_date </td>
+        </tr>
+    {% for p in polls %}
+        <tr>
+            <td> {{ p.question }} </td>
+            <td> {{ p.pub_date }} </td>
+        </tr>
+    {% endfor %}
+ </table>
+</body>
+</html>
