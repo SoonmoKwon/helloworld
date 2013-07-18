@@ -9,8 +9,9 @@ urlpatterns = patterns('',
     url(r'^$', 'polls.views.home', name='home'),
     # url(r'^helloworld/', include('helloworld.foo.urls')),
 
-    url(r'^polls/', 'polls.views.polls', name = 'polls' ),
-
+    url(r'^polls/$', 'polls.views.polls', name = 'polls_list' ),
+    url(r'^polls/process/', 'polls.views.polls_process', name = 'polls_process'),
+    url(r'^polls/radio/', 'polls.views.polls_radio', name = 'polls_radio'),
     # Uncomment the admin/doc line below to enable admin documentation:
     url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
 

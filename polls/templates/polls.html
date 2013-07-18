@@ -1,30 +1,55 @@
 <!DOCTYPE html>
+
+{% load staticfiles %}
+
 <html>
 <head>
     <title></title>
         <script src="http://code.jquery.com/jquery.js"></script>
+
+        <link href="{% static 'bootstrap/css/bootstrap.min.css' %}" rel = 'stylesheet'>
+        <script src= "{% static 'bootstrap/js/bootstrap.min.js' %}"></script>
         <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css" rel="stylesheet">
         <script src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/js/bootstrap.min.js"></script>
 </head>
 <body>
-<table class = "table">
-        <tr>
-            <td> Question </td>
-            <td> pub_date </td>
-        </tr>
-    {% for p in polls %}
-        <tr>
-            <td> {{ p.question }} </td>
-            <td> {{ p.pub_date }} </td>
-        </tr>
-        <tr>
-            <td>
-                {% for c in p.choice_set.all %}
-                    {{ c }}
-                {% endfor %}
-            </td>
-        </tr>
-    {% endfor %}
- </table>
+
+{% for p in polls %}
+<h1>{{ p.question }}</h1>
+<h2>{{ p.pub_date }}</h2>
+
+    <form action = "{% url "polls_process" %}" method = "POST">
+         {% csrf_token %}
+         {% for c in p.choice_set.all %}
+             <input type= "radio" name = "choice" value="{{ c.id }}" id="r{{ c.id }}">
+             <label for="r{{c.id}}">{{ c.choice_text }}<span id="v{{ c.id }}">[{{ c.votes }}]</span></label>
+         {% endfor %}
+
+         <input class = "btn btn-warning" type = "submit" name = "submit">
+    </form>
+
+
+{% endfor %}
+
+<script type = "text/javascript">
+    $(function() {
+
+        $("[type='radio']").click( function() {
+
+
+            $.post( "{% url 'polls_radio' %}", {radio_id: this.id}, function (data) {
+                //update the count of the radio button
+
+                //alert("Radio ID: " + data["radio_id"] + " " + "Votes: " + data["votes"]);
+                $("#" + data["radio_id"]).text("[" + data["votes"] + "]");
+                return
+            });
+        });
+
+
+    })
+
+</script>
+
 </body>
 </html>
