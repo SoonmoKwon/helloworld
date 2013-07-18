@@ -7,7 +7,7 @@
         <script src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/js/bootstrap.min.js"></script>
 </head>
 <body>
-<table>
+<table class = "table">
         <tr>
             <td> Question </td>
             <td> pub_date </td>
@@ -16,6 +16,13 @@
         <tr>
             <td> {{ p.question }} </td>
             <td> {{ p.pub_date }} </td>
+        </tr>
+        <tr>
+            <td>
+                {% for c in p.choice_set.all %}
+                    {{ c }}
+                {% endfor %}
+            </td>
         </tr>
     {% endfor %}
  </table>
